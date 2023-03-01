@@ -1,0 +1,20 @@
+Returns a list of projects with the possibility to filter that list
+---
+parameters:
+  - name: almKey
+    description: 'The DevOps Platform setting key that''s used to bind SonarQube and GitLab'
+    in: path
+    type: string
+    required: true
+  - name: query
+    description: 'Query to filter the list of projects based on component names and keys'
+    in: query
+    type: string
+    required: false
+responses:
+  200:
+    description: A list of projects
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Project'

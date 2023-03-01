@@ -26,5 +26,5 @@ config_by_name = dict(
     test=TestingConfig,
     prod=ProductionConfig
 )
-
-key = Config.SECRET_KEY
+KEY = Config.SECRET_KEY
+VERSION = 'v1'

@@ -1,27 +1,27 @@
 from ..service import project_service
+from app.main.config import VERSION
 
 from flask import Blueprint, request
 from flasgger import swag_from
 
-project_controller = Blueprint('Project Controller', __name__)
+project_controller = Blueprint('Project Controller', __name__, url_prefix=f'/{VERSION}')
 
 
-@project_controller.route("/alm/<string:alm_key>/projects/", methods=['GET'])
-@swag_from('../docs/project_controller.yml')
-def list_projects(alm_key):
-    """ returns a list of all projects or projects that matches the search input if specified  """
-    search_input = request.args.get('search_input', type=str)
+@project_controller.route('/alm/<string:almKey>/projects/', methods=['GET'])
+@swag_from('../docs/project_controller_list_projects.yml')
+def search_projects(almKey):
+    """ Returns a list of projects with the possibility to filter that list  """
+    alm_key = almKey
+    query = request.args.get('query', type=str)
 
-    if search_input is None:
-        return project_service.list_projects(alm_key)
-    else:
-        return project_service.search_projects(alm_key, search_input)
+    return project_service.search_projects(alm_key, query)
 
 
-@project_controller.route("/alm/<string:alm_key>/projects/", methods=['POST'])
-@swag_from('../docs/project_controller.yml')
-def import_project(alm_key):
-    """ imports a gitlab project into sonarqube """
+@project_controller.route('/alm/<string:almKey>/projects/', methods=['POST'])
+# @swag_from('../docs/project_controller_list_projects.yml')
+def import_project(almKey):
+    """ Imports a GitLab project into SonarQube """
+    alm_key = almKey
     content = request.json
 
     return project_service.import_project(alm_key, content['gitlab_project_id'])

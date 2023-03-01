@@ -1,10 +1,5 @@
-
-def list_projects(alm_key):
-    return f"ALM key: {alm_key}"
-
-
-def search_projects(alm_key, search_input):
-    return f"ALM key: {alm_key} & search input: {search_input}"
+def search_projects(alm_key, query):
+    return f"ALM key: {alm_key} & query: {query}"
 
 
 def import_project(alm_key, gitlab_project_id):

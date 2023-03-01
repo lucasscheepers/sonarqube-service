@@ -1,0 +1,11 @@
+---
+definitions:
+  Project:
+    type: object
+    properties:
+      key:
+        type: string
+        description: 'Project key'
+      name:
+        type: string
+        description: 'Project name'
