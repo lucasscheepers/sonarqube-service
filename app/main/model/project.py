@@ -1,4 +1,4 @@
-import json
+from json import JSONEncoder
 
 
 class Project:
@@ -7,6 +7,6 @@ class Project:
         self.project_name = project_name
 
 
-class ProjectEncoder(json.JSONEncoder):
-    def default(self, obj):
-        return [obj.x, obj.y]
+class ProjectEncoder(JSONEncoder):
+    def default(self, o):
+        return o.__dict__

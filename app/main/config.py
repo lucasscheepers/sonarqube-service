@@ -4,7 +4,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
-    SECRET_KEY = os.getenv('SECRET_KEY')
     DEBUG = False
 
 
@@ -26,5 +25,6 @@ config_by_name = dict(
     test=TestingConfig,
     prod=ProductionConfig
 )
-KEY = Config.SECRET_KEY
-VERSION = 'v1'
+VERSION = os.getenv('VERSION')
+SONARQUBE_API = os.getenv('SONARQUBE_API')
+SONARQUBE_TOKEN = os.getenv('SONARQUBE_TOKEN')

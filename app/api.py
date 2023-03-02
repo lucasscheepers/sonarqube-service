@@ -3,6 +3,9 @@ from main.config import config_by_name, VERSION
 
 from flask import Flask, jsonify
 from flasgger import Swagger
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def create_api(config):
@@ -24,7 +27,7 @@ def create_api(config):
 
 api = create_api('dev')
 
-# TODO: ADD LOGGING
+# TODO: ADD LOGGING & ERROR HANDLING
 
 
 @api.route('/v1', methods=['GET'])

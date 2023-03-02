@@ -1,0 +1,18 @@
+Imports a GitLab project into SonarQube
+---
+parameters:
+  - name: almKey
+    description: 'The DevOps Platform setting key that''s used to bind SonarQube and GitLab'
+    in: path
+    type: string
+    required: true
+  - name: importGitlabProjectBody
+    in: body
+    required: true
+    schema:
+      $ref: "#/definitions/ImportGitlabProjectBody"
+responses:
+  200:
+    description: The imported project
+    schema:
+      $ref: '#/definitions/Project'

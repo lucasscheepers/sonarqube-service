@@ -9,3 +9,12 @@ definitions:
       name:
         type: string
         description: 'Project name'
+  ImportGitlabProjectBody:
+    description: 'The body in json format with the parameters that''s used to import a GitLab project'
+    properties:
+      gitlabProjectId:
+        type: integer
+        description: 'The GitLab project ID'
+        example: 1
+    required:
+      - gitlabProjectId
