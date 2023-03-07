@@ -1,5 +1,5 @@
 import json
-from ..config import SONARQUBE_API, SONARQUBE_TOKEN
+from ..config import CONFIG
 
 import requests
 from ..model.project import Project, ProjectEncoder
@@ -10,8 +10,8 @@ def search_projects(query):
     # TODO: TRY MULTIPLE SCENARIOS FOR ERROR HANDLING
     params = {'organization': 'lucasscheepers', 'q': query}
 
-    url = f'{SONARQUBE_API}/projects/search'
-    response_json = requests.get(url, params=params, auth=(f'{SONARQUBE_TOKEN}', '')).json()
+    url = f'{CONFIG.SONARQUBE_API}/projects/search'
+    response_json = requests.get(url, params=params, auth=(f'{CONFIG.SONARQUBE_TOKEN}', '')).json()
 
     projects = []
     for i in response_json['components']:

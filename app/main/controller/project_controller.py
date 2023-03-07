@@ -1,10 +1,10 @@
 from ..service import project_service
-from app.main.config import VERSION
+from app.main.config import CONFIG
 
 from flask import Blueprint, request
 from flasgger import swag_from
 
-project_controller = Blueprint('Project Controller', __name__, url_prefix=f'/{VERSION}')
+project_controller = Blueprint('Project Controller', __name__, url_prefix=f'/{CONFIG.VERSION}')
 
 
 @project_controller.route('/projects/', methods=['GET'])

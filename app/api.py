@@ -1,33 +1,52 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from main.controller.project_controller import project_controller
-from main.config import config_by_name, VERSION
+from main.config import CONFIG
 
 from flask import Flask, jsonify
 from flasgger import Swagger
-from dotenv import load_dotenv
+from logging.config import dictConfig
+import logging
 
-load_dotenv()
 
+def setup_api():
+    dictConfig({
+        'version': 1,
+        'formatters': {'default': {
+            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s'
+        }},
+        'handlers': {'wsgi': {
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://flask.logging.wsgi_errors_stream',
+            'formatter': 'default'
+        }},
+        'root': {
+            'level': CONFIG.LOGGING_LEVEL,
+            'handlers': ['wsgi']
+        }
+    })
 
-def create_api(config):
     _api = Flask(__name__)
     _api.register_blueprint(project_controller)
-    _api.config.from_object(config_by_name[config])
+    _api.config.from_object(CONFIG)
     Swagger(_api, config={
         'title': 'Sonarqube Automation API',
-        'version': f'{VERSION}',
+        'version': f'{CONFIG.VERSION}',
         'description': 'This service is written to automate the creation of Sonarqube projects '
                        'based on the Gitlab projects',
         'termsOfService': None,
-        'specs_route': f'/{VERSION}/apidocs/'
+        'specs_route': f'/{CONFIG.VERSION}/apidocs/'
 
     }, merge=True, template_file='main/docs/definitions.yml')
 
     return _api
 
 
-api = create_api('dev')
+api = setup_api()
 
-# TODO: ADD LOGGING & ERROR HANDLING
+
+# TODO: ADD LOGS & ERROR HANDLING
 
 
 @api.route('/v1', methods=['GET'])
@@ -39,4 +58,5 @@ def more_information():
 
 
 if __name__ == '__main__':
+    logging.info('Starting the API')
     api.run()
